@@ -1,0 +1,19 @@
+Meetings in Agile
+
+Sprints — 2 week — GO LIVE
+
+June 29th — Sprint Planning Meeting
+
+Full Day — Planning is not good — Execution will not be good
+
+Epics
+Features
+User Stories
+Tasks
+
+2. Retrospective Meeting
+
+3. Daily Standup Meeting
+    1. What did you do yesterday
+    2. What are you planning for today
+    3. Any Impediments / blockers — We did not get the subscription
