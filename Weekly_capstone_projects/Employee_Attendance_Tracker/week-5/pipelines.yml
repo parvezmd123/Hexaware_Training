@@ -1,0 +1,33 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+schedules:
+- cron: "0 9 * * 1"
+  displayName: Weekly Monday Run
+  branches:
+    include:
+      - main
+  always: true
+
+steps:
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install pandas numpy
+  displayName: Install Libraries
+
+- script: |
+    python Employee_Attendance_ETL.py
+  displayName: Run Employee Attendance ETL
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: reports
+    ArtifactName: EmployeeAttendanceReport
+    publishLocation: Container
