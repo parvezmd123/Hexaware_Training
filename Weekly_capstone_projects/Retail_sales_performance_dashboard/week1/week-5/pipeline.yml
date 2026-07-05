@@ -1,0 +1,46 @@
+trigger:
+- main
+
+schedules:
+- cron: "0 8 * * 1"
+  displayName: Weekly Monday Pipeline
+  branches:
+    include:
+    - main
+  always: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+steps:
+
+- checkout: self
+  displayName: 'Checkout Source Code'
+
+- task: UsePythonVersion@0
+  displayName: 'Use Python $(pythonVersion)'
+  inputs:
+    versionSpec: '$(pythonVersion)'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install pandas
+  displayName: 'Install Python Packages'
+
+- script: |
+    python Retail_Sales_ETL.py
+  displayName: 'Execute Retail Sales ETL'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Output Files'
+  inputs:
+    PathtoPublish: '.'
+    ArtifactName: 'RetailSalesOutput'
+    publishLocation: 'Container'
+
+- script: |
+    echo "Retail Sales Dashboard Pipeline Completed Successfully"
+  displayName: 'Pipeline Completed'
